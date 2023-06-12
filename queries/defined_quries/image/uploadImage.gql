@@ -1,0 +1,11 @@
+mutation image_upload(
+  $file: Upload!
+  $productId: String!
+  $imageDescription: String
+) {
+  image_upload(
+    file: $file
+    product_Id: $productId
+    image_description: $imageDescription
+  )
+}

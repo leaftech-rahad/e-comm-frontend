@@ -1,0 +1,15 @@
+npm i --save-dev @graphql-codegen/cli @graphql-codegen/typescript @graphql-codegen/typescript-graphql-request @graphql-codegen/typescript-operations nodemon
+
+
+add codegen.yml file
+
+schema: http://localhost:4000/graphql
+documents: "./queries/**/*.gql"
+generates:
+  ./generated/graphql.ts:
+    plugins:
+      - typescript
+      - typescript-operations
+      - typescript-graphql-request
+
+

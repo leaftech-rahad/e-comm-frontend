@@ -1,0 +1,6 @@
+query getCustomers {
+  allCustomer {
+    customer_Id
+    customer_name
+  }
+}
