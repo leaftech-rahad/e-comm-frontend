@@ -1,9 +1,12 @@
 import "./globals.css";
-import { Inter } from "next/font/google";
+//import { Inter } from "next/font/google";
 import Providers from "../utils/providers.jsx";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import Link from "next/link";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 
-const inter = Inter({ subsets: ["latin"] });
+//const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
   title: "Create Next App",
@@ -17,10 +20,17 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body
+        style={{ fontFamily: "Aleo-Regular" }}
+        className={/* inter.className +*/ " grid grid-flow-row "}
+      >
         <Providers>
-          {children}
-          <ReactQueryDevtools />
+          <Header />
+          <main className="  min-h-screen ">
+            {children}
+            <ReactQueryDevtools />
+          </main>
+          <Footer />
         </Providers>
       </body>
     </html>
