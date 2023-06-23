@@ -1,8 +1,13 @@
 import React from "react";
 
-const Card = ({ children }) => {
+const Card = ({ className, children }) => {
   return (
-    <div className="drop-shadow-md hover:drop-shadow-xl bg-white rounded p-3 m-2 border border-[#bfc3ca]">
+    <div
+      className={
+        className +
+        " drop-shadow-sm hover:drop-shadow-md bg-white rounded p-3 m-2 border border-[#bfc3ca]"
+      }
+    >
       {children}
     </div>
   );

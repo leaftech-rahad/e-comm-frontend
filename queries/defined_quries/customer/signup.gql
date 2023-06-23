@@ -1,0 +1,20 @@
+mutation signUp(
+  $customerName: String!
+  $customerPassword: String!
+  $customerPhone: String
+  $customerEmail: String
+) # $customerDob: DateTime
+# $customerArea: Area
+{
+  signUp(
+    customer_name: $customerName
+    customer_password: $customerPassword
+    customer_phone: $customerPhone
+    customer_email: $customerEmail
+  ) # customer_DOB: $customerDob
+  # customer_area: $customerArea
+  {
+    customer_Id
+    customer_name
+  }
+}

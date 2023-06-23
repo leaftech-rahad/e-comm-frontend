@@ -4,10 +4,9 @@ import { Button } from "./Button";
 
 const Header = () => {
   return (
-    <header className=" h-[60px]  flex flex-row  items-center px-2 drop-shadow-lg border-b border-[#d3d7e0]">
+    <header className=" h-[60px]  flex flex-row  items-center px-2 drop-shadow-sm hover:drop-shadow-md border-b border-[#d3d7e0]">
       <Link
         href={"/"}
-        noopener
         className=" mr-auto text-4xl"
         style={{ fontFamily: "ExpletusSans-BoldItalic" }}
       >

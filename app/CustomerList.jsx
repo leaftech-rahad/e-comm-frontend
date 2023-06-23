@@ -13,7 +13,9 @@ export default function CustomerList() {
       <h1 className=" text-center">Customers</h1>
       <ul className=" text-center">
         {data?.allCustomer.map((customer) => (
-          <li key={customer.customer_Id}>{customer.customer_Id}</li>
+          <li key={customer.customer_Id}>
+            {customer.customer_Id} {customer.customer_name}
+          </li>
         ))}
       </ul>
     </>

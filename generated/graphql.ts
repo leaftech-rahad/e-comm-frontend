@@ -363,6 +363,16 @@ export type GetCustomersQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetCustomersQuery = { __typename?: 'Query', allCustomer: Array<{ __typename?: 'Customer', customer_Id: string, customer_name: string }> };
 
+export type SignUpMutationVariables = Exact<{
+  customerName: Scalars['String']['input'];
+  customerPassword: Scalars['String']['input'];
+  customerPhone?: InputMaybe<Scalars['String']['input']>;
+  customerEmail?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type SignUpMutation = { __typename?: 'Mutation', signUp?: { __typename?: 'Customer', customer_Id: string, customer_name: string } | null };
+
 export type Image_UploadMutationVariables = Exact<{
   file: Scalars['Upload']['input'];
   productId: Scalars['String']['input'];
@@ -376,6 +386,19 @@ export type Image_UploadMutation = { __typename?: 'Mutation', image_upload?: boo
 export const GetCustomersDocument = gql`
     query getCustomers {
   allCustomer {
+    customer_Id
+    customer_name
+  }
+}
+    `;
+export const SignUpDocument = gql`
+    mutation signUp($customerName: String!, $customerPassword: String!, $customerPhone: String, $customerEmail: String) {
+  signUp(
+    customer_name: $customerName
+    customer_password: $customerPassword
+    customer_phone: $customerPhone
+    customer_email: $customerEmail
+  ) {
     customer_Id
     customer_name
   }
@@ -400,6 +423,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
   return {
     getCustomers(variables?: GetCustomersQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetCustomersQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetCustomersQuery>(GetCustomersDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getCustomers', 'query');
+    },
+    signUp(variables: SignUpMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<SignUpMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<SignUpMutation>(SignUpDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'signUp', 'mutation');
     },
     image_upload(variables: Image_UploadMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<Image_UploadMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<Image_UploadMutation>(Image_UploadDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'image_upload', 'mutation');
