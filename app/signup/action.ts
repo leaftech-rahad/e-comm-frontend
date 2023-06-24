@@ -5,5 +5,5 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function Action() {
   const res = NextResponse.next();
-  console.log(res);
+  //console.log(res);
 }

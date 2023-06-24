@@ -2,11 +2,11 @@
 
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { getCustomers } from "../api/index.js";
+import { setCookie, getCookie } from "cookies-next";
+import { GraphQLClient } from "graphql-request";
 
 export default function CustomerList() {
-  const { data, isLoading, isError } = useQuery(["getCustomers"], () =>
-    getCustomers()
-  );
+  const { data } = useQuery(["getCustomers"], () => getCustomers());
 
   return (
     <>
@@ -14,7 +14,8 @@ export default function CustomerList() {
       <ul className=" text-center">
         {data?.allCustomer.map((customer) => (
           <li key={customer.customer_Id}>
-            {customer.customer_Id} {customer.customer_name}
+            customer ID: {customer.customer_Id} <br />
+            customer Name:{customer.customer_name}
           </li>
         ))}
       </ul>

@@ -30,68 +30,75 @@ const SignUpForm = ({ onclick }) => {
     const data = formik.values;
     //
 
-    console.log(formik.values);
+    //console.log(formik.values);
     mutation.mutate(data);
   }
 
   if (mutation?.data?.signUp) {
     redirect("/");
   }
-
+  console.log();
   return (
-    <form onSubmit={OnSubmit} className=" flex flex-col ">
-      <label htmlFor="customerName"> Name</label>
-      <input
-        type="text"
-        name="customerName"
-        id="customerName"
-        className=" border border-[#d3d7e0] rounded mb-2"
-        onChange={formik.handleChange}
-        value={formik.values.customerName}
-      />
-      <label htmlFor="customerPhone">Phone</label>
-      <input
-        type="text"
-        name="customerPhone"
-        id="customerPhone"
-        className=" border border-[#d3d7e0] rounded mb-2"
-        onChange={formik.handleChange}
-        value={formik.values.customerPhone}
-      />
-      <label htmlFor="customerEmail">Email</label>
-      <input
-        type="text"
-        name="customerEmail"
-        id="customerEmail"
-        className=" border border-[#d3d7e0] rounded mb-2"
-        onChange={formik.handleChange}
-        value={formik.values.customerEmail}
-      />
-      <label htmlFor="customerPassword">Password</label>
-      <input
-        type="password"
-        name="customerPassword"
-        id="customerPassword"
-        className=" border border-[#d3d7e0] rounded mb-2"
-        onChange={formik.handleChange}
-        value={formik.values.customerPassword}
-      />
-      <label htmlFor="reType_password">Confirm Password</label>
-      <input
-        type="password"
-        name="reType_password"
-        id="reType_password"
-        className=" border border-[#d3d7e0] rounded mb-2"
-        onChange={formik.handleChange}
-        value={formik.values.reType_password}
-      />
+    <>
+      <form onSubmit={OnSubmit} className=" flex flex-col ">
+        <label htmlFor="customerName"> Name</label>
+        <input
+          type="text"
+          name="customerName"
+          id="customerName"
+          className=" border border-[#d3d7e0] rounded mb-2"
+          onChange={formik.handleChange}
+          value={formik.values.customerName}
+        />
+        <label htmlFor="customerPhone">Phone</label>
+        <input
+          type="text"
+          name="customerPhone"
+          id="customerPhone"
+          className=" border border-[#d3d7e0] rounded mb-2"
+          onChange={formik.handleChange}
+          value={formik.values.customerPhone}
+        />
+        <label htmlFor="customerEmail">Email</label>
+        <input
+          type="text"
+          name="customerEmail"
+          id="customerEmail"
+          className=" border border-[#d3d7e0] rounded mb-2"
+          onChange={formik.handleChange}
+          value={formik.values.customerEmail}
+        />
+        <label htmlFor="customerPassword">Password</label>
+        <input
+          type="password"
+          name="customerPassword"
+          id="customerPassword"
+          className=" border border-[#d3d7e0] rounded mb-2"
+          onChange={formik.handleChange}
+          value={formik.values.customerPassword}
+        />
+        <label htmlFor="reType_password">Confirm Password</label>
+        <input
+          type="password"
+          name="reType_password"
+          id="reType_password"
+          className=" border border-[#d3d7e0] rounded mb-2"
+          onChange={formik.handleChange}
+          value={formik.values.reType_password}
+        />
 
-      <Button
-        type={"submit"}
-        button_text={"Sign Up"}
-        className=" border border-[#d3d7e0] mt-5"
-      />
-    </form>
+        <Button
+          type={"submit"}
+          button_text={"Sign Up"}
+          className=" border border-[#d3d7e0] mt-5"
+        />
+      </form>
+      {mutation.isError ? (
+        <div className=" text-center pt-4">
+          {JSON.stringify(mutation.error.response.errors[0].message)}
+        </div>
+      ) : null}
+    </>
   );
 };
 

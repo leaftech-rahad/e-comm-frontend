@@ -1,6 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { Button } from "./Button";
+import Profile from "./Profile";
 
 const Header = () => {
   return (
@@ -25,6 +26,7 @@ const Header = () => {
         button_text={"logo"}
         className={"  ml-1 bg-[#4d7ef9] text-white"}
       />
+      <Profile />
     </header>
   );
 };

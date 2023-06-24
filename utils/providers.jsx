@@ -17,6 +17,16 @@ export default function Providers({ children }) {
         },
       })
   );
+  // const queryClient = new QueryClient({
+  //   defaultOptions: {
+  //     queries: {
+  //       refetchOnWindowFocus: false,
+  //       staleTime: 1000 * 60 * 10,
+  //       refetchOnMount: false,
+  //       refetchOnReconnect: false,
+  //     },
+  //   },
+  // });
 
   return (
     <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>

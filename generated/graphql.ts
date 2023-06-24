@@ -230,6 +230,7 @@ export type Query = {
   allCustomer: Array<Customer>;
   categories?: Maybe<Array<Maybe<Product_Category>>>;
   category?: Maybe<Product_Category>;
+  customer: Customer;
   getBrandById?: Maybe<Brand>;
   getBrandByName: Array<Brand>;
   getBrands: Array<Brand>;
@@ -358,6 +359,18 @@ export type Supplier = {
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
 };
 
+export type CustomerQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type CustomerQuery = { __typename?: 'Query', customer: { __typename?: 'Customer', customer_Id: string, customer_name: string } };
+
+export type GetCustomerQueryVariables = Exact<{
+  customerId: Scalars['String']['input'];
+}>;
+
+
+export type GetCustomerQuery = { __typename?: 'Query', getCustomer: { __typename?: 'Customer', customer_Id: string, customer_name: string } };
+
 export type GetCustomersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -383,6 +396,22 @@ export type Image_UploadMutationVariables = Exact<{
 export type Image_UploadMutation = { __typename?: 'Mutation', image_upload?: boolean | null };
 
 
+export const CustomerDocument = gql`
+    query customer {
+  customer {
+    customer_Id
+    customer_name
+  }
+}
+    `;
+export const GetCustomerDocument = gql`
+    query getCustomer($customerId: String!) {
+  getCustomer(customer_Id: $customerId) {
+    customer_Id
+    customer_name
+  }
+}
+    `;
 export const GetCustomersDocument = gql`
     query getCustomers {
   allCustomer {
@@ -421,6 +450,12 @@ const defaultWrapper: SdkFunctionWrapper = (action, _operationName, _operationTy
 
 export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = defaultWrapper) {
   return {
+    customer(variables?: CustomerQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<CustomerQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<CustomerQuery>(CustomerDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'customer', 'query');
+    },
+    getCustomer(variables: GetCustomerQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetCustomerQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetCustomerQuery>(GetCustomerDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getCustomer', 'query');
+    },
     getCustomers(variables?: GetCustomersQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetCustomersQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetCustomersQuery>(GetCustomersDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getCustomers', 'query');
     },
