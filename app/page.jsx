@@ -6,14 +6,12 @@ import Card from "../components/Card";
 
 export default async function Page() {
   const queryClient = getQueryClient();
-  await queryClient.prefetchQuery(["getCustomers"], () => getCustomers());
+  //await queryClient.prefetchQuery(["getCustomers"], () => getCustomers());
   const dehydratedState = dehydrate(queryClient);
 
   return (
     <Hydrate state={dehydratedState}>
-      <Card>
-        <CustomerList />
-      </Card>
+      <Card>{/*<CustomerList />*/}</Card>
     </Hydrate>
   );
 }

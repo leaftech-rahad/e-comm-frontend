@@ -4,6 +4,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { getCustomers } from "../api/index.js";
 import { setCookie, getCookie } from "cookies-next";
 import { GraphQLClient } from "graphql-request";
+import Page from "./page.jsx";
 
 export default function CustomerList() {
   const { data } = useQuery(["getCustomers"], () => getCustomers());

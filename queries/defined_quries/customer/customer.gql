@@ -2,5 +2,6 @@ query customer {
   customer {
     customer_Id
     customer_name
+    role
   }
 }

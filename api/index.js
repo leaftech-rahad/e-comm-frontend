@@ -22,5 +22,12 @@ const gqlClint = new GraphQLClient("http://localhost:4000/", {
   },
 });
 
-export const { getCustomers, image_upload, signUp, getCustomer, customer } =
-  getSdk(gqlClint);
+export const {
+  getCustomers,
+  image_upload,
+  signUp,
+  getCustomer,
+  customer,
+  signIn,
+  signOut,
+} = getSdk(gqlClint);

@@ -42,6 +42,7 @@ export type Customer = {
   customer_name: Scalars['String']['output'];
   customer_password: Scalars['String']['output'];
   customer_phone: Scalars['String']['output'];
+  role?: Maybe<Role>;
   sales: Array<Sales>;
   updated_at?: Maybe<Scalars['DateTime']['output']>;
 };
@@ -323,6 +324,12 @@ export type QuerySupplierArgs = {
   supplier_Id: Scalars['String']['input'];
 };
 
+export enum Role {
+  Admin = 'admin',
+  Customer = 'customer',
+  Staff = 'staff'
+}
+
 export type Sales = {
   __typename?: 'Sales';
   canceled_order?: Maybe<Scalars['Boolean']['output']>;
@@ -359,10 +366,15 @@ export type Supplier = {
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
 };
 
+export type CategoriesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type CategoriesQuery = { __typename?: 'Query', categories?: Array<{ __typename?: 'Product_category', category_Id: string, category_description?: string | null, category_name?: string | null } | null> | null };
+
 export type CustomerQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type CustomerQuery = { __typename?: 'Query', customer: { __typename?: 'Customer', customer_Id: string, customer_name: string } };
+export type CustomerQuery = { __typename?: 'Query', customer: { __typename?: 'Customer', customer_Id: string, customer_name: string, role?: Role | null } };
 
 export type GetCustomerQueryVariables = Exact<{
   customerId: Scalars['String']['input'];
@@ -375,6 +387,20 @@ export type GetCustomersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetCustomersQuery = { __typename?: 'Query', allCustomer: Array<{ __typename?: 'Customer', customer_Id: string, customer_name: string }> };
+
+export type SignInMutationVariables = Exact<{
+  customerPassword: Scalars['String']['input'];
+  customerPhone?: InputMaybe<Scalars['String']['input']>;
+  customerEmail?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type SignInMutation = { __typename?: 'Mutation', signIn?: { __typename?: 'Customer', customer_Id: string, customer_phone: string, customer_email: string } | null };
+
+export type SignOutMutationVariables = Exact<{ [key: string]: never; }>;
+
+
+export type SignOutMutation = { __typename?: 'Mutation', signOut?: boolean | null };
 
 export type SignUpMutationVariables = Exact<{
   customerName: Scalars['String']['input'];
@@ -396,11 +422,21 @@ export type Image_UploadMutationVariables = Exact<{
 export type Image_UploadMutation = { __typename?: 'Mutation', image_upload?: boolean | null };
 
 
+export const CategoriesDocument = gql`
+    query Categories {
+  categories {
+    category_Id
+    category_description
+    category_name
+  }
+}
+    `;
 export const CustomerDocument = gql`
     query customer {
   customer {
     customer_Id
     customer_name
+    role
   }
 }
     `;
@@ -418,6 +454,24 @@ export const GetCustomersDocument = gql`
     customer_Id
     customer_name
   }
+}
+    `;
+export const SignInDocument = gql`
+    mutation signIn($customerPassword: String!, $customerPhone: String, $customerEmail: String) {
+  signIn(
+    customer_password: $customerPassword
+    customer_phone: $customerPhone
+    customer_email: $customerEmail
+  ) {
+    customer_Id
+    customer_phone
+    customer_email
+  }
+}
+    `;
+export const SignOutDocument = gql`
+    mutation signOut {
+  signOut
 }
     `;
 export const SignUpDocument = gql`
@@ -450,6 +504,9 @@ const defaultWrapper: SdkFunctionWrapper = (action, _operationName, _operationTy
 
 export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = defaultWrapper) {
   return {
+    Categories(variables?: CategoriesQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<CategoriesQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<CategoriesQuery>(CategoriesDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'Categories', 'query');
+    },
     customer(variables?: CustomerQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<CustomerQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<CustomerQuery>(CustomerDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'customer', 'query');
     },
@@ -458,6 +515,12 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     getCustomers(variables?: GetCustomersQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetCustomersQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetCustomersQuery>(GetCustomersDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getCustomers', 'query');
+    },
+    signIn(variables: SignInMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<SignInMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<SignInMutation>(SignInDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'signIn', 'mutation');
+    },
+    signOut(variables?: SignOutMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<SignOutMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<SignOutMutation>(SignOutDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'signOut', 'mutation');
     },
     signUp(variables: SignUpMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<SignUpMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<SignUpMutation>(SignUpDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'signUp', 'mutation');

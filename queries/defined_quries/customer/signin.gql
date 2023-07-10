@@ -1,0 +1,15 @@
+mutation signIn(
+  $customerPassword: String!
+  $customerPhone: String
+  $customerEmail: String
+) {
+  signIn(
+    customer_password: $customerPassword
+    customer_phone: $customerPhone
+    customer_email: $customerEmail
+  ) {
+    customer_Id
+    customer_phone
+    customer_email
+  }
+}

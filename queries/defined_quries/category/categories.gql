@@ -1,0 +1,7 @@
+query Categories {
+  categories {
+    category_Id
+    category_description
+    category_name
+  }
+}

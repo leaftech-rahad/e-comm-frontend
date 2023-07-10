@@ -1,6 +1,13 @@
 import React from "react";
 
-export const Button = ({ button_text, className, type, disabled, onClick }) => {
+export const Button = ({
+  button_text,
+  className,
+  type,
+  disabled,
+  onClick,
+  children,
+}) => {
   return (
     <button
       className={" p-1 rounded  transition " + className}
@@ -9,6 +16,7 @@ export const Button = ({ button_text, className, type, disabled, onClick }) => {
       onClick={onClick}
     >
       {button_text}
+      {children}
     </button>
   );
 };

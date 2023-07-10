@@ -2,13 +2,14 @@
 import React from "react";
 import { useFormik, useField, useFormikContext } from "formik";
 import { Button } from "../../components/Button.jsx";
-import { signUp } from "../../api/index.js";
-import { useMutation } from "@tanstack/react-query";
-import { Action } from "./action.ts";
+import { signUp, customer, signOut } from "../../api/index.js";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+
 import { redirect } from "next/navigation";
 import { setCookie, getCookies } from "cookies-next";
 
-const SignUpForm = ({ onclick }) => {
+const SignUpForm = () => {
+  const queryClient = useQueryClient();
   const formik = useFormik({
     initialValues: {
       customerName: "",
@@ -22,22 +23,17 @@ const SignUpForm = ({ onclick }) => {
 
   const mutation = useMutation({
     mutationFn: signUp,
-    onSuccess: (data) => {},
+    onSuccess: () => {},
   });
   async function OnSubmit(e) {
     e.preventDefault();
 
-    const data = formik.values;
-    //
-
-    //console.log(formik.values);
-    mutation.mutate(data);
+    const val = formik.values;
+    mutation.mutate(val);
+    queryClient.invalidateQueries({ queryKey: ["customer"] });
   }
 
-  if (mutation?.data?.signUp) {
-    redirect("/");
-  }
-  console.log();
+  mutation?.data ? redirect("/") : null;
   return (
     <>
       <form onSubmit={OnSubmit} className=" flex flex-col ">

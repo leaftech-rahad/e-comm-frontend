@@ -5,11 +5,11 @@ import { customer } from "../api/index.js";
 
 const Profile = () => {
   const queryClient = useQueryClient();
-  queryClient.invalidateQueries({ queryKey: ["customer"] });
-  const { data } = useQuery(["customer"], () => customer(), { retry: 2 });
+  //queryClient.invalidateQueries({ queryKey: ["customer"] });
+  const { data, isLoading } = useQuery(["customer"], () => customer());
   if (data?.customer.customer_Id)
-    return <p>Hi! {data?.customer.customer_name}</p>;
-  else return <p>Loading...</p>;
+    return <p className=" max-sm:hidden">Hi! {data?.customer.customer_name}</p>;
+  else return null;
 };
 
 export default Profile;
